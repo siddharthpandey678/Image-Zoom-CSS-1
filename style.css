@@ -1,0 +1,110 @@
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+:root {
+  --viewfinder-scale: 4;
+  --viewfinder-size-scale: 0.5;
+  --size: 50;
+}
+body {
+  align-items: center;
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  background: #031417;
+}
+h1 {
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  margin: 0;
+  font-family: sans-serif;
+  color: #149cb8;
+}
+.zoomer {
+  width: 100vmin;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  box-shadow: 1vmin 1vmin 2vmin 1vmin #000;
+}
+.zoomer__img {
+  --color-one: #f2f2f2;
+  --color-two: #d9d9d9;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(var(--color-one), var(--color-two), var(--color-one));
+}
+.zoomer__img:not([src]) {
+  -webkit-animation: roll 1s infinite linear;
+          animation: roll 1s infinite linear;
+}
+.zoomer__img:not([src]) ~ .zoomer__viewfinder {
+  display: none;
+}
+.zoomer__viewfinder {
+  --show: 0;
+  cursor: none;
+  height: calc((var(--size) * var(--viewfinder-size-scale)) * 1vmin);
+  width: calc((var(--size) * var(--viewfinder-size-scale)) * 1vmin);
+  position: absolute;
+  top: calc(var(--y, 50) * 1%);
+  left: calc(var(--x, 50) * 1%);
+  transition: transform 0.25s ease;
+  transform: translate(-50%, -50%) scale(var(--show));
+}
+.zoomer__viewfinder-image-wrapper {
+  border-radius: 50%;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.zoomer__magnifying-glass {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(1.2) translate(4%, 5%);
+  z-index: 2;
+}
+.zoomer__viewfinder-img {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transform: scale(var(--viewfinder-scale)) translate(calc(var(--x, 0) * 1%), calc(var(--y, 0) * 1%));
+  transform-origin: center center;
+}
+.zoomer__viewfinder-img:not([src]) {
+  display: none;
+}
+.magnifying-glass__glass {
+  fill: rgba(204,246,255,0.3);
+}
+.magnifying-glass__frame {
+  fill: #999;
+  stroke: #000;
+}
+.magnifying-glass__handle {
+  stroke: #000;
+  fill: #737373;
+}
+.magnifying-glass__grip {
+  fill: #5c250a;
+  stroke: #000;
+}
+.magnifying-glass__shine {
+  stroke: rgba(255,255,255,0.65);
+  fill: none;
+}
+@-webkit-keyframes roll {
+  to {
+    background-position: 0 calc(var(--size, 50) * 1vmin);
+  }
+}
+@keyframes roll {
+  to {
+    background-position: 0 calc(var(--size, 50) * 1vmin);
+  }
+}
